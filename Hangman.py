@@ -29,6 +29,7 @@ for i in range(26): # generates the x and y coordinates for each button and appe
 
 # Fonts
 LETTER_FONT = pygame.font.SysFont('arial', 40) # This sets the font and size for the letters on the buttons.
+WORD_FONT = pygame.font.SysFont('arial', 50)
 
 # Load Images 
 images = [] # Creates an empty list named images
@@ -37,7 +38,9 @@ for i in range(7): # Starts a for loop that will iterate 7 times, with i taking 
     images.append(image) # This line appends the loaded image to the images list. After the loop finishes, images will be a list of seven Pygame Surface objects, each representing one of the loaded images
 
 # Game Variables
-hangman_status = 6
+hangman_status = 0
+word = "DEVELOPER"
+guessed = []
 
 # colors
 WHITE = (255,255,255) # This creates a tuple representing the color white. Pygame uses RGB values to represent colors, where (255,255,255) corresponds to white
@@ -52,6 +55,21 @@ run = True # This is a flag variable used to control the main game loop. As long
 def draw():
     win.fill((WHITE)) #  fills the entire game window with white color.
     
+    # Draw word
+    display_word = ""
+    for letter in word:
+        if letter in guessed:
+            display_word += letter + " "
+        else:
+            display_word += "_ "
+            
+    text = WORD_FONT.render(display_word, 1, BLUE)
+    win.blit(text, (400, 200))
+            
+
+        
+        
+        
     # Draw buttons
     for letter in letters: # this line starts a for loop that iterates over the letters list. Each letter in this list is expected to be a list or tuple that contains two elements, representing the x and y coordinates of a button.
         x, y, ltr, visible = letter # This line unpacks the coordinate pair into x and y variables
@@ -81,6 +99,11 @@ while run:  # This is the main game loop. Everything inside this loop will be ex
                     dis = math.sqrt((x - m_x)**2 + (y - m_y)**2 ) # This line calculates the distance between the mouse click and the center of the button. The distance is calculated using the Pythagorean theorem.
                     if dis < RADIUS: # This line checks if the distance between the mouse click and the center of the button is less than the radius of the button. If it is, the button was clicked.
                         letter[3] = False # If the button was clicked, this line sets the visibility of the button to False, which means the button will not be drawn in the next frame
-            
+                        guessed.append(ltr)
+                        if ltr not in word:
+                            hangman_status += 1
+
+
+
 pygame.quit() # This function is called after the main game loop has ended. It will cleanly exit the Pygame library
 
