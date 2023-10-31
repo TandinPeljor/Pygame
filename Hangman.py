@@ -1,6 +1,6 @@
 import pygame # This line imports the Pygame library which is a set of Python modules designed for writing games
 import math # This line imports the math module which provides mathematical functions.
-
+import random
 
 # Setup display
 
@@ -30,6 +30,7 @@ for i in range(26): # generates the x and y coordinates for each button and appe
 # Fonts
 LETTER_FONT = pygame.font.SysFont('arial', 40) # This sets the font and size for the letters on the buttons.
 WORD_FONT = pygame.font.SysFont('arial', 50)
+TITLE_FONT = pygame.font.SysFont('arial', 70)
 
 # Load Images 
 images = [] # Creates an empty list named images
@@ -39,7 +40,8 @@ for i in range(7): # Starts a for loop that will iterate 7 times, with i taking 
 
 # Game Variables
 hangman_status = 0
-word = "DEVELOPER"
+words = ["SYNTAX", "PYTHON", "VARIABLE", "COMMIT", "BOOLEAN", "INTEGER", "FLOAT", "STRING", "OUTPUT", "LOOP"]
+word = random.choice(words)
 guessed = []
 
 # colors
@@ -54,6 +56,12 @@ run = True # This is a flag variable used to control the main game loop. As long
 
 def draw():
     win.fill((WHITE)) #  fills the entire game window with white color.
+    
+    # Draw Title
+    text = TITLE_FONT.render("TP HANGMAN GAME", 1, BLUE)
+    win.blit(text, (WIDTH/2 - text.get_width()/2, 20))
+    
+    
     
     # Draw word
     display_word = ""
@@ -83,10 +91,20 @@ def draw():
     
 
 
+def display_message(message):
+    pygame.time.delay(1000)
+    win.fill(WHITE)
+    text = WORD_FONT.render(message, 1, BLUE)
+    win.blit(text, (WIDTH/2 - text.get_width()/2, HEIGHT/2 - text.get_height()/2))
+    pygame.display.update()
+    pygame.time.delay(3000)
+    
+
+
+
 while run:  # This is the main game loop. Everything inside this loop will be executed every frame.
     clock.tick(FPS) # This function makes sure that your game runs at the FPS, specified earlier. It will delay the game to ensure it runs at the correct speed
     
-    draw() # The draw() function call is executing the draw function that was previously defined.
 
     for event in pygame.event.get(): # This is an event loop. It checks for events such as keyboard presses or mouse movement.
         if event.type == pygame.QUIT: # This checks if the event is a QUIT event, which happens when the user clicks the close button on the game window.
@@ -102,8 +120,21 @@ while run:  # This is the main game loop. Everything inside this loop will be ex
                         guessed.append(ltr)
                         if ltr not in word:
                             hangman_status += 1
+    
+    draw() # The draw() function call is executing the draw function that was previously defined.
 
-
+    
+    won = True
+    for letter in word:
+        if letter not in guessed:
+            won = False
+            break
+    if won:
+        display_message("YOU WON!")
+        break
+    if hangman_status == 6:
+        display_message("YOU LOST!")
+        break
 
 pygame.quit() # This function is called after the main game loop has ended. It will cleanly exit the Pygame library
 
