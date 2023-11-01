@@ -2,6 +2,7 @@ import pygame # This line imports the Pygame library which is a set of Python mo
 import math # This line imports the math module which provides mathematical functions.
 import random
 
+
 # Setup display
 
 pygame.init() #This initializes all the modules in Pygame. This function needs to be called before you can use any other Pygame function
@@ -41,8 +42,8 @@ for i in range(7): # Starts a for loop that will iterate 7 times, with i taking 
 # Game Variables
 hangman_status = 0
 words = ["SYNTAX", "PYTHON", "VARIABLE", "COMMIT", "BOOLEAN", "INTEGER", "FLOAT", "STRING", "OUTPUT", "LOOP"]
-word = random.choice(words)
-guessed = []
+word = random.choice(words) # used to select a random word from the list words
+guessed = [] #  empty list that will be used to keep track of the letters that the player has guessed. As the player guesses letters, they will be added to this list.
 
 # colors
 WHITE = (255,255,255) # This creates a tuple representing the color white. Pygame uses RGB values to represent colors, where (255,255,255) corresponds to white
@@ -58,8 +59,8 @@ def draw():
     win.fill((WHITE)) #  fills the entire game window with white color.
     
     # Draw Title
-    text = TITLE_FONT.render("TP HANGMAN GAME", 1, BLUE)
-    win.blit(text, (WIDTH/2 - text.get_width()/2, 20))
+    text = TITLE_FONT.render("TP HANGMAN GAME", 1, BLUE) # creates a text surface with the title "TP HANGMAN GAME" using the specified font and color. The render() function is used to create this surface.
+    win.blit(text, (WIDTH/2 - text.get_width()/2, 20)) # displays this text surface on the game window
     
     
     
@@ -70,6 +71,8 @@ def draw():
             display_word += letter + " "
         else:
             display_word += "_ "
+# The code starts by initializing an empty string display_word. It then iterates over each letter in the secret word. 
+# If the letter has been guessed (i.e., it's in the guessed list), it adds the letter to display_word. Otherwise, it adds an underscore (_). This effectively replaces unguessed letters with underscores in the displayed word.
             
     text = WORD_FONT.render(display_word, 1, BLUE)
     win.blit(text, (400, 200))
@@ -81,7 +84,7 @@ def draw():
     # Draw buttons
     for letter in letters: # this line starts a for loop that iterates over the letters list. Each letter in this list is expected to be a list or tuple that contains two elements, representing the x and y coordinates of a button.
         x, y, ltr, visible = letter # This line unpacks the coordinate pair into x and y variables
-        if visible:   
+        if visible:  # checks if the button is visible. If the button is not visible, the code inside this if statement will be skipped for this button. 
             pygame.draw.circle(win, BLUE, (x, y), RADIUS, 3) # This line uses the pygame.draw.circle() function to draw a circle on the game window
             text = LETTER_FONT.render(ltr, 1, BLUE)
             win.blit(text, (x - text.get_width() / 2,  y - text.get_height() / 2))
@@ -92,15 +95,15 @@ def draw():
 
 
 def display_message(message):
-    pygame.time.delay(1000)
+    pygame.time.delay(1000) # This line pauses the execution of the game for 1000 milliseconds (or 1 second). This can be used to give the player a moment to see the message before the game continues.
     win.fill(WHITE)
-    text = WORD_FONT.render(message, 1, BLUE)
+    text = WORD_FONT.render(message, 1, BLUE) # This line displays the text surface on the game window. The blit() function of the pygame.Surface class is used to do this. The position where the text will be displayed is calculated to center it both horizontally and vertically in the window.
     win.blit(text, (WIDTH/2 - text.get_width()/2, HEIGHT/2 - text.get_height()/2))
-    pygame.display.update()
-    pygame.time.delay(3000)
+    pygame.display.update() #  This line updates the entire screen to display the new content. This is necessary to actually show the message on the screen.
+    pygame.time.delay(3000) # This line pauses the execution of the game for another 3000 milliseconds (or 3 seconds).
     
 
-
+    
 
 while run:  # This is the main game loop. Everything inside this loop will be executed every frame.
     clock.tick(FPS) # This function makes sure that your game runs at the FPS, specified earlier. It will delay the game to ensure it runs at the correct speed
@@ -117,24 +120,26 @@ while run:  # This is the main game loop. Everything inside this loop will be ex
                     dis = math.sqrt((x - m_x)**2 + (y - m_y)**2 ) # This line calculates the distance between the mouse click and the center of the button. The distance is calculated using the Pythagorean theorem.
                     if dis < RADIUS: # This line checks if the distance between the mouse click and the center of the button is less than the radius of the button. If it is, the button was clicked.
                         letter[3] = False # If the button was clicked, this line sets the visibility of the button to False, which means the button will not be drawn in the next frame
-                        guessed.append(ltr)
-                        if ltr not in word:
+                        guessed.append(ltr) # This line adds the letter on the button to the list of guessed letters.
+                        if ltr not in word: #  If the guessed letter is not in the word, this line increments the hangman_status, which keeps track of the current state of the Hangman
                             hangman_status += 1
+    
+    
     
     draw() # The draw() function call is executing the draw function that was previously defined.
 
     
-    won = True
-    for letter in word:
-        if letter not in guessed:
-            won = False
-            break
+    won = True # This line initializes a flag variable won as True. This variable is used to track whether the player has won the game.
+    for letter in word: # his line starts a loop that iterates over each letter in the word that the player is trying to guess.
+        if letter not in guessed: #  Inside the loop, this line checks if the current letter is in the list of letters that the player has guessed. If it's not, that means the player hasn't guessed this letter yet.
+            won = False #  If the player hasn't guessed a letter, this line sets the won flag to False, indicating that the player hasn't won the game yet.
+            break # This line immediately exits the loop. Since the won flag is now False, there's no need to check the rest of the letters in the word.
     if won:
-        display_message("YOU WON!")
+        display_message("YOU WON!") # If the player has won, this line displays a "YOU WON!" message on the screen.
         break
-    if hangman_status == 6:
-        display_message("YOU LOST!")
-        break
+    if hangman_status == 6: #  If it's 6, that means the Hangman image is fully drawn, indicating that the player has guessed the word incorrectly 6 times.
+        display_message("YOU LOST!") # f the player has lost, this line displays a "YOU LOST!" message on the screen.
+        break # This line immediately exits the game loop. Since the player has lost, there's no need to keep the game running
 
 pygame.quit() # This function is called after the main game loop has ended. It will cleanly exit the Pygame library
 
