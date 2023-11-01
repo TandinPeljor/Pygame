@@ -1,6 +1,18 @@
 import pygame # This line imports the Pygame library which is a set of Python modules designed for writing games
 import math # This line imports the math module which provides mathematical functions.
 import random
+from pygame import mixer # This line imports the mixer module from pygame. The mixer module contains functions for dealing with sound and music
+
+from moviepy.editor import AudioFileClip # This line imports the AudioFileClip class from moviepy.editor. This class can be used to create an audio clip from a sound file or an array
+
+video_file = "OQFQ3750.MP4"  # Video file name 
+audio_file = "audio.mp3"  # Output audio file name
+
+video = AudioFileClip(video_file) # This line creates an AudioFileClip object from the video file. This object represents the audio of the video
+video.write_audiofile(audio_file) #  This line extracts the audio from the video and writes it to an audio file 
+
+pygame.mixer.music.load(audio_file) # This line loads the audio file for playback.
+pygame.mixer.music.play(-1) # This line starts playing the audio file. The -1 argument makes the music loop indefinitely.
 
 
 # Setup display
