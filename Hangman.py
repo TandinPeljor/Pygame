@@ -1,10 +1,14 @@
+# https://www.youtube.com/watch?v=UEO1B_llDnc
+# https://www.youtube.com/watch?v=W6cjx7t39d4&t=11s
+# https://www.youtube.com/watch?v=d038LZp_Jhk
+
 import pygame # This line imports the Pygame library which is a set of Python modules designed for writing games
 import math # This line imports the math module which provides mathematical functions.
 import random
 from pygame import mixer # This line imports the mixer module from pygame. The mixer module contains functions for dealing with sound and music
-
 from moviepy.editor import AudioFileClip # This line imports the AudioFileClip class from moviepy.editor. This class can be used to create an audio clip from a sound file or an array
 
+# Adding Background Music
 video_file = "OQFQ3750.MP4"  # Video file name 
 audio_file = "audio.mp3"  # Output audio file name
 
@@ -75,7 +79,6 @@ def draw():
     win.blit(text, (WIDTH/2 - text.get_width()/2, 20)) # displays this text surface on the game window
     
     
-    
     # Draw word
     display_word = ""
     for letter in word:
@@ -88,10 +91,7 @@ def draw():
             
     text = WORD_FONT.render(display_word, 1, BLUE)
     win.blit(text, (400, 200))
-            
-
-        
-        
+               
         
     # Draw buttons
     for letter in letters: # this line starts a for loop that iterates over the letters list. Each letter in this list is expected to be a list or tuple that contains two elements, representing the x and y coordinates of a button.
@@ -154,4 +154,3 @@ while run:  # This is the main game loop. Everything inside this loop will be ex
         break # This line immediately exits the game loop. Since the player has lost, there's no need to keep the game running
 
 pygame.quit() # This function is called after the main game loop has ended. It will cleanly exit the Pygame library
-
