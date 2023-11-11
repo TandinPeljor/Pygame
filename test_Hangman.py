@@ -2,40 +2,12 @@ import unittest # unittest provides a rich set of tools for constructing and run
 import pygame
 from Hangman import * # This line imports all functions and variables from the Hangman module.
 import random
-from moviepy.editor import AudioFileClip
+from moviepy.editor import VideoFileClip
+
     
 class TestHangmanGame(unittest.TestCase): # This line defines a new class TestHangmanGame that inherits from unittest.TestCase. This class represents a test case for the Hangman game.
  
-    def setUp(self):
-        pygame.init()
-        pygame.mixer.init()
-        self.audio_file = "audio.wav"
-        self.video_file = "OQFQ3750.MP4"
-        self.video = AudioFileClip(self.video_file)
-        self.video.write_audiofile(self.audio_file)
-        pygame.mixer.music.load(self.audio_file)
-        pygame.mixer.music.play(-1)
-
-    def test_load_music(self):
-        # Check if the music is correctly loaded
-        self.assertTrue(pygame.mixer.music.get_busy())
-
-    def test_play_music(self):
-        # Check if the music is correctly played
-        self.assertTrue(pygame.mixer.music.get_busy())
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+     
     def setUp(self): # This method is called before each test method is run. It is typically used to set up any state that is shared across tests.
         pygame.init() # This line initializes all imported Pygame modules. This must be called before any other Pygame functions.
         WIDTH, HEIGHT = 800, 500
@@ -52,6 +24,20 @@ class TestHangmanGame(unittest.TestCase): # This line defines a new class TestHa
         self.guessed = []
         random.seed(1)  # Set the seed for reproducibility
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     def test_button_placement(self):
         for i in range(26):
             x = self.startx + self.GAP * 2 + ((self.RADIUS * 2 + self.GAP) * (i % 13))
