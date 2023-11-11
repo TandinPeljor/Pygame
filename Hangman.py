@@ -8,6 +8,8 @@ import random
 from pygame import mixer # This line imports the mixer module from pygame. The mixer module contains functions for dealing with sound and music
 from moviepy.editor import AudioFileClip # This line imports the AudioFileClip class from moviepy.editor. This class can be used to create an audio clip from a sound file or an array
 
+
+pygame.init()
 pygame.mixer.init()
 
 # Adding Background Music
