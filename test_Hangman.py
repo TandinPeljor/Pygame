@@ -24,6 +24,7 @@ class TestHangmanGame(unittest.TestCase): # This line defines a new class TestHa
         random.seed(1)  # sets the seed for reproducibility, meaning that the same sequence of random numbers will be generated each time the tests are run.
 
     
+    
  # Test Background Music   
     @patch('moviepy.editor.VideoFileClip') # This line uses the patch decorator from the unittest.mock module to replace the VideoFileClip function from the moviepy.editor module with a Mock object. This allows the test to control the behavior of VideoFileClip and make assertions about how it is used
     def test_background_music(self, mock_videofileclip):
@@ -57,7 +58,28 @@ class TestHangmanGame(unittest.TestCase): # This line defines a new class TestHa
         # Check if the pygame.mixer.music.play method was called correctly
         pygame.mixer.music.play.assert_called_once_with(-1)
 
-    
+ 
+ 
+# Test Game Setup Display
+    def test_game_setup(self):
+        # Initialize Pygame
+        pygame.init()
+
+        # Set up the game window
+        WIDTH, HEIGHT = 800, 500
+        win = pygame.display.set_mode((WIDTH, HEIGHT))
+
+        # Check if the window size is correct
+        self.assertEqual(win.get_size(), (WIDTH, HEIGHT))
+
+        # Set the window title
+        pygame.display.set_caption("Hangman Game")
+
+        # Check if the window title is correct
+        self.assertEqual(pygame.display.get_caption()[0], "Hangman Game")
+  
+  
+       
 # Test Font Creations        
     def test_font_creation(self):
         LETTER_FONT = pygame.font.SysFont('arial', 40)
@@ -76,7 +98,7 @@ class TestHangmanGame(unittest.TestCase): # This line defines a new class TestHa
 
     
 
-# Test Color Constatnts
+# Test Color Constants
     def test_color_constants(self):
         # Define the color constants
         WHITE = (255,255,255)
@@ -85,6 +107,7 @@ class TestHangmanGame(unittest.TestCase): # This line defines a new class TestHa
         # Check if the color constants are correctly defined
         self.assertEqual(WHITE, (255,255,255))
         self.assertEqual(BLUE, (0, 0, 255))
+
 
 
 # Test Button Placement
@@ -103,6 +126,8 @@ class TestHangmanGame(unittest.TestCase): # This line defines a new class TestHa
             self.assertEqual(self.letters[i][0], self.startx + self.GAP * 2 + ((self.RADIUS * 2 + self.GAP) * (i % 13)))
             self.assertEqual(self.letters[i][1], self.starty + ((i // 13) * (self.GAP + self.RADIUS * 2)))
 
+
+
 # Test Image Loading
     def test_image_loading(self):
         for i in range(7):
@@ -115,6 +140,7 @@ class TestHangmanGame(unittest.TestCase): # This line defines a new class TestHa
         # Check if the images are not None
         for image in self.images:
             self.assertIsNotNone(image)
+
 
     
 # Test Game Setup
@@ -132,6 +158,44 @@ class TestHangmanGame(unittest.TestCase): # This line defines a new class TestHa
         self.assertEqual(self.guessed, [])
 
 
+
+# Test Button Drawing
+    def test_button_drawing(self):
+        pygame.init()
+        win = pygame.display.set_mode((800,600))
+
+   
+    # Define a list of buttons, where each button is represented as a list of four elements:
+    # x and y coordinates, the letter, and a visibility flag
+        letters = [[50, 50, 'A', True], [100, 50, 'B', True], [150, 50, 'C', True]]
+     # Define the color and radius for the buttons
+        BLUE = (0, 0, 255)
+        RADIUS = 20
+    # Loop over each button
+        for letter in letters: 
+            x, y, ltr, visible = letter
+            if visible:
+                pygame.draw.circle(win, BLUE, (x, y), RADIUS, 3)
+                LETTER_FONT = pygame.font.Font(None, 50)
+                text = LETTER_FONT.render(ltr, 1, BLUE)
+                win.blit(text, (x - text.get_width() / 2,  y - text.get_height() / 2))
+
+        pygame.display.update()
+
+        # Check if button is visible and correctly positioned
+        for letter in letters:
+            x, y, ltr, visible = letter
+            if visible:
+                self.assertTrue(pygame.draw.circle(win, BLUE, (x, y), RADIUS, 3))
+
+        # Check if text is correctly rendered and positioned
+        for letter in letters:
+            x, y, ltr, visible = letter
+            if visible:
+                text = LETTER_FONT.render(ltr, 1, BLUE)
+                self.assertTrue(win.blit(text, (x - text.get_width() / 2,  y - text.get_height() / 2)))
+    
+    
     
 # Test Win Conditions
     def test_win_condition(self):
@@ -145,6 +209,7 @@ class TestHangmanGame(unittest.TestCase): # This line defines a new class TestHa
 
         # Check if the win condition is correctly checked
         self.assertEqual(won, True)
+
 
 
 # Test Lose Conditions
