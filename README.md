@@ -42,3 +42,58 @@ To run the game, simply execute the main Python script. You can interact with th
 # Conclusion.
 This Hangman game showcases how the Pygame library can be used to create a simple yet entertaining game. It demonstrates key Pygame concepts such as game loops, event handling, and drawing on the screen. Enjoy playing Hangman!
 
+
+
+
+
+
+# CAP3_TestCase
+
+# Overview
+This repository contains the unit tests for the Hangman game implemented using Pygame in Python. The tests aim to ensure the correct functionality of various features of the game such as background music, game display setup, font creation, color constants, button placement, image loading, game setup, button drawing, and win/lose conditions.
+
+# Dependencies
+The tests require the following Python libraries.
+
+unittest: Provides a rich set of tools for constructing and running tests.
+
+pygame: A set of Python modules designed for writing video games.
+
+random: Generates pseudo-random numbers.
+
+unittest.mock: Provides tools for mocking objects and methods.
+
+
+
+# Test Cases
+The test cases cover the following aspects of the Hangman game.
+
+Background Music: Tests if the audio is correctly extracted from a video file and is played as background music.
+
+Game Display Setup: Checks if the game window is correctly set up with the right size and title.
+
+Font Creation: Tests if the fonts are correctly created and their size is greater than zero.
+
+Color Constants: Checks if the color constants are correctly defined.
+
+Button Placement: Tests if the buttons are correctly placed on the game window.
+
+Image Loading: Checks if the images are correctly loaded.
+
+Game Setup: Tests if the game is correctly set up with a random word selected and the hangman status set to 0.
+
+Button Drawing: Checks if the buttons are correctly drawn on the game window.
+
+Win/Lose Conditions: Tests if the win/lose conditions are correctly checked.
+
+
+# Running the Tests
+To run the tests, execute the main Python test script using the following command:
+
+python test_hangman.py
+
+This will run all the test cases and display the results in the console.
+
+
+# Conclusion
+Unit testing is an essential part of software development that ensures the correctness of code. It helps in identifying and fixing bugs early in the development cycle, preventing regressions, and maintaining high code quality.
